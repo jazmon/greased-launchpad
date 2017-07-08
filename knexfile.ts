@@ -1,20 +1,19 @@
 // Update with your config settings.
-module.exports = {
+const config = {
   development: {
+    acquireConnectionTimeout: 1000,
     client: 'postgresql',
     connection: {
-      host: process.env.PG_HOST || 'localhost',
       database: process.env.PG_DATABASE || 'greaserocket',
-      user: process.env.PG_USER || 'greaserocket',
+      host: process.env.PG_HOST || 'localhost',
       password: process.env.PG_PASSWORD || 'greaserocket',
+      user: process.env.PG_USER || 'greaserocket',
     },
     migrations: {
       tableName: 'knex_migrations',
     },
-    acquireConnectionTimeout: 1000,
     // debug: true,
   },
-
   // staging: {
   //   client: 'postgresql',
   //   connection: {
@@ -44,3 +43,5 @@ module.exports = {
   //   },
   // },
 };
+
+export default config;

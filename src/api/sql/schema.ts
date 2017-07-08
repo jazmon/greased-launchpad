@@ -43,9 +43,11 @@ export const schema = [
   }
 `,
 ];
-interface Foo {
-  user_id: string,
+
+export interface Foo {
+  user_id: string;
 }
+
 export const resolvers = {
   Message: {
     createdAt: property('created_at'),
