@@ -1,6 +1,6 @@
 import * as socketio from 'socket.io';
 import logger from './logger';
-import knex from './db';
+import { default as knex } from './db';
 import * as Joi from 'joi';
 
 import * as http from 'http';

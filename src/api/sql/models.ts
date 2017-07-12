@@ -1,19 +1,18 @@
-import { default as knex, User, Location, Post, Message } from '../../db';
-
+import { default as knex, User, Post, Message } from '../../db';
 
 export interface PostWithUser extends Post {
-  user: User | null,
+  user: User | null;
 }
 
 export interface MessageWithUser extends Message {
-  user: User | null,
+  user: User | null;
 }
 
 export class Messages {
-  async getAll(): Promise<Array<Message>> {
+  async getAll(): Promise<Message[]> {
     return knex('messages');
   }
-  async getAllWithUsers(): Promise<Array<MessageWithUser>> {
+  async getAllWithUsers(): Promise<MessageWithUser[]> {
     const messages = await knex('messages')
       .select(knex.raw('messages.*, row_to_json(users.*) as user'))
       .innerJoin('users', 'messages.user_id', 'users.user_id');
@@ -24,17 +23,22 @@ export class Messages {
     return query.then(([row]) => row);
   }
 
-  async submitMessage({ content, userId }: { content: string, userId: string }): Promise<string> {
+  async submitMessage({
+    content,
+    userId,
+  }: {
+    content: string;
+    userId: string;
+  }): Promise<string> {
     const id = await knex.transaction(trx =>
       trx('messages').insert({
         content,
         user_id: userId,
-      })
+      }),
     );
     return id;
   }
 }
-
 
 export class Posts {
   async getAll(): Promise<Post[]> {
@@ -53,27 +57,29 @@ export class Posts {
   }
 }
 
-export class Locations {
-  async getAll(): Promise<Array<Location>> {
-    return knex('locations');
-  }
-  async getLocationById(id: string): Promise<Location> {
-    const query = knex('locations').where({ id });
-    return query.then(([row]) => row);
-  }
-}
-
 export class Users {
-  async getAll(): Promise<Array<User>> {
+  async getAll(): Promise<User[]> {
     return knex('users');
   }
   async getUserById(id: string): Promise<User> {
     const query = knex('users').where({ user_id: id });
     return query.then(([row]) => row);
   }
-  async createUser({ userId, name, email, picture, nickname }: { userId: string, name: string, email: string, picture: string, nickname: string }): Promise<string> {
+  async createUser({
+    userId,
+    name,
+    email,
+    picture,
+    nickname,
+  }: {
+    userId: string;
+    name: string;
+    email: string;
+    picture: string;
+    nickname: string;
+  }): Promise<string> {
     return knex('users')
-      .insert({ user_id: userId, name, email, picture, nickname })
+      .insert({ name, email, picture, nickname, user_id: userId })
       .returning('user_id');
   }
 }

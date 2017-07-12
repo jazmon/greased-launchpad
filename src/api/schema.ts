@@ -45,8 +45,8 @@ const schema = [...rootSchema, ...sqlSchema];
 const resolvers = merge(rootResolvers, sqlResolvers);
 
 const executableSchema = makeExecutableSchema({
-  typeDefs: schema,
   resolvers,
+  typeDefs: schema,
 });
 
 export default executableSchema;

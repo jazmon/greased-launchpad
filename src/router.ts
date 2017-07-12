@@ -1,12 +1,14 @@
-const express = require('express');
-const locations = require('./endpoints/locations');
-const messages = require('./endpoints/messages');
-const users = require('./endpoints/users');
-const posts = require('./endpoints/posts');
+import * as express from 'express';
+import { Router } from 'express-serve-static-core';
+
+import * as location from 'modules/location/endpoint';
+import * as messages from './endpoints/messages';
+import * as users from './endpoints/users';
+import * as posts from './endpoints/posts';
 
 const router = express.Router();
 
-router.get('/locations', locations.getLocations);
+router.get('/locations', location.getLocations);
 
 router.get('/messages', messages.getMessages);
 router.post('/messages', messages.submitMessage);

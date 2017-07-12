@@ -17,7 +17,7 @@ import authenticator from './middleware/authenticator';
 import errorHandler from './middleware/errorHandler';
 import graphiql from './middleware/graphiql';
 import graphql from './middleware/graphql';
-import createSocketServer from './socketServer';
+import { default as createSocketServer } from './socketServer';
 
 const app = express();
 const server: http.Server = http.createServer(app);
@@ -37,7 +37,6 @@ app.use(jwt({ secret: process.env.AUTH0_SECRET, credentialsRequired: false }));
 app.use(authenticator);
 
 app.use('/v1', router);
-
 
 app.get('/health', async (req: express.Request, res: express.Response) => {
   res.status(200).send('Ok');
