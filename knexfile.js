@@ -1,18 +1,24 @@
+require('dotenv').config();
 // Update with your config settings.
+/**
+ * 
+ * @param {*} debugDb string | null
+ * 
+ * @return boolean
+ */
+function isDebugDb(debugDb) {
+  return debugDb ? debugDb === 'true' : false;
+}
+
 const config = {
   development: {
     acquireConnectionTimeout: 1000,
     client: 'postgresql',
-    connection: {
-      database: process.env.PG_DATABASE || 'greaserocket',
-      host: process.env.PG_HOST || 'localhost',
-      password: process.env.PG_PASSWORD || 'greaserocket',
-      user: process.env.PG_USER || 'greaserocket',
-    },
+    connection: process.env.DB_CONNECTION,
     migrations: {
       tableName: 'knex_migrations',
     },
-    // debug: true,
+    debug: isDebugDb(process.env.DEBUG_DATABASE),
   },
   // staging: {
   //   client: 'postgresql',
@@ -43,5 +49,7 @@ const config = {
   //   },
   // },
 };
+// exports.config = config;
+// exports.default = config;
+// exports.development = config;
 module.exports = config;
-export default config;

@@ -2,10 +2,9 @@ import { AuthenticationClient } from 'auth0';
 import { Request, Response } from 'express';
 import * as jwt from 'jwt-decode';
 
-// HACK: set to any since auth0 type doesn't have tokens property correctly
-const auth0: any = new AuthenticationClient({
-  domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
+const auth0 = new AuthenticationClient({
+  domain: <string>process.env.AUTH0_DOMAIN,
+  clientId: <string>process.env.AUTH0_CLIENT_ID,
 });
 
 export default async (req: Request, res: Response, next: Function) => {
@@ -21,8 +20,8 @@ export default async (req: Request, res: Response, next: Function) => {
     const token = authHeader.split('Bearer ')[0];
     // verify token
     jwt(token);
-
-    const user = await auth0.tokens.getInfo(token);
+    const tokens = (<any>auth0).tokens;
+    const user = await tokens.getInfo(token);
     // eslint-disable-next-line no-param-reassign
     req.user = {
       email: user.email,

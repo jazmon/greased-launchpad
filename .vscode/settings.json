@@ -1,4 +1,14 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "prettier.trailingComma": "all",
+  "prettier.jsxBracketSameLine": true,
+  "prettier.semi": true,
+  "prettier.useTabs": false,
+  "prettier.typescriptEnable": ["typescript", "typescriptreact"],
+  "prettier.jsonEnable": ["json"],
+  "prettier.graphqlEnable": ["graphql"],
+  "prettier.printWidth": 80,
+  "prettier.tabWidth": 2,
+  "prettier.singleQuote": true,
+  "editor.formatOnSave": true
 }

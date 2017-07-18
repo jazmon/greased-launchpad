@@ -1,8 +1,11 @@
-import logger from '../logger';
 import * as express from 'express';
 import { Response } from 'express-serve-static-core';
+import logger from '~/logger';
 
-export const createJsonRoute = (handler: Function) => async (req: express.Request, res: express.Response) => {
+export const createJsonRoute = (handler: Function) => async (
+  req: express.Request,
+  res: express.Response,
+) => {
   try {
     const result = await handler(req, res);
     return res.json({
@@ -17,4 +20,3 @@ export const createJsonRoute = (handler: Function) => async (req: express.Reques
       .json({ error: true, data: { message: err.message } });
   }
 };
-

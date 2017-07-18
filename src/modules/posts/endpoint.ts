@@ -1,5 +1,5 @@
-import { Posts } from '../api/sql/models';
-import { createJsonRoute } from '../utils/endpoint';
+import { Posts } from './model';
+import { createJsonRoute } from 'utils/endpoint';
 import * as express from 'express';
 import { Response } from 'express-serve-static-core';
 

@@ -1,12 +1,12 @@
 import * as socketio from 'socket.io';
-import logger from './logger';
-import { default as knex } from './db';
 import * as Joi from 'joi';
-
 import * as http from 'http';
-import { validateRequest } from './utils/validator';
-import { User } from './types';
-import { schema as userSchema } from './endpoints/users';
+import logger from '~/logger';
+import { default as knex } from '~/db';
+import { validateRequest } from '~/utils/validator';
+import { User } from '~/modules/users';
+import { schema as userSchema } from '~/modules/users/endpoint';
+import { HttpError, Maybe } from '~/types';
 
 const DEFAULT_ROOM = 'general';
 const printJson = (json: string) => JSON.stringify(json, null, 2);
@@ -18,7 +18,8 @@ type SocketEvent =
   | 'message_emitted'
   | 'error';
 
-const doesUserExist = async (userId: string): Promise<boolean> => {
+const doesUserExist = async (userId: Maybe<string>): Promise<boolean> => {
+  if (userId === null) return false;
   return (
     (await knex('users').select('user_id').where('user_id', userId).count()) > 0
   );
@@ -30,10 +31,11 @@ const onNewUserConnect = (
 ) => async (user: User) => {
   try {
     validateRequest(user, userSchema);
-    const userAlreadyExists: boolean = await doesUserExist(user.userId);
+    if (user === null) throw (new HttpError('Not authorized').status = 403);
+    const userAlreadyExists: boolean = await doesUserExist(user.user_id);
     if (!userAlreadyExists) {
       knex('users').insert({
-        user_id: user.userId,
+        user_id: user.user_id,
         email: user.email,
         name: user.name,
         nickname: user.nickname,

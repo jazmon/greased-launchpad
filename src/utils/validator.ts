@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { HttpError } from '../types';
+import { HttpError } from '~/types';
 
 export const validateRequest = (value: Object, schema: Object) => {
   Joi.validate(value, schema, err => {
@@ -10,4 +10,3 @@ export const validateRequest = (value: Object, schema: Object) => {
     }
   });
 };
-

@@ -11,19 +11,34 @@ import * as http from 'http';
 import * as helmet from 'helmet';
 import * as jwt from 'express-jwt';
 
-import logger from './logger';
-import router from './router';
-import authenticator from './middleware/authenticator';
-import errorHandler from './middleware/errorHandler';
-import graphiql from './middleware/graphiql';
-import graphql from './middleware/graphql';
-import { default as createSocketServer } from './socketServer';
+import logger from '~/logger';
+import router from '~/router';
+import authenticator from '~/middleware/authenticator';
+import errorHandler from '~/middleware/errorHandler';
+import graphiql from '~/middleware/graphiql';
+import graphql from '~/middleware/graphql';
+import { default as createSocketServer } from '~/socketServer';
+
+const REQUIRED_ENV_VARS: string[] = [
+  'AUTH0_SECRET',
+  'AUTH0_DOMAIN',
+  'AUTH0_CLIENT',
+  'NODE_ENV',
+  'DB_CONNECTION',
+  'LOG_LEVEL',
+];
+
+REQUIRED_ENV_VARS.forEach((envVar: string) => {
+  if (!process.env.hasOwnProperty(envVar)) {
+    throw new Error(`${envVar} is required to be in env!`);
+  }
+});
 
 const app = express();
 const server: http.Server = http.createServer(app);
 createSocketServer(server);
 
-const PORT: number = process.env.PORT || 9000;
+const PORT: number = Number.parseInt(<string>process.env.PORT, 10) || 9000;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +48,9 @@ app.use(cors());
 app.use('/graphiql', graphiql);
 app.use('/graphql', graphql);
 
-app.use(jwt({ secret: process.env.AUTH0_SECRET, credentialsRequired: false }));
+app.use(
+  jwt({ secret: <string>process.env.AUTH0_SECRET, credentialsRequired: false }),
+);
 app.use(authenticator);
 
 app.use('/v1', router);

@@ -1,4 +1,4 @@
-exports.seed = function (knex, Promise) {
+exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('locations').del().then(() =>
     // Inserts seed entries
@@ -24,6 +24,6 @@ exports.seed = function (knex, Promise) {
         title: 'Museum',
         description: 'spooky!',
       },
-    ])
+    ]),
   );
 };

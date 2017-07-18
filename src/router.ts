@@ -1,10 +1,10 @@
 import * as express from 'express';
 import { Router } from 'express-serve-static-core';
 
-import * as location from 'modules/location/endpoint';
-import * as messages from './endpoints/messages';
-import * as users from './endpoints/users';
-import * as posts from './endpoints/posts';
+import * as users from '~/modules/users/endpoint';
+import * as location from '~/modules/locations/endpoint';
+import * as messages from '~/modules/messages/endpoint';
+import * as posts from '~/modules/posts/endpoint';
 
 const router = express.Router();
 

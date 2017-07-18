@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
 import { schema as sqlSchema, resolvers as sqlResolvers } from './sql/schema';
 import { GraphQLSchema } from 'graphql';
-import { Context } from '../middleware/graphql';
+import { Context } from '~/middleware/graphql';
 const rootSchema = [
   `
     type Query {

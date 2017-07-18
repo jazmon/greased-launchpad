@@ -2,17 +2,25 @@ import { execute } from 'graphql';
 import * as express from 'express';
 import { graphqlExpress } from 'graphql-server-express';
 import { ExpressHandler } from 'graphql-server-express/dist/expressApollo';
-import { Messages, Users, Locations, Posts } from '../api/sql/models';
+import { Messages } from '~/modules/messages';
+import { Posts } from '~/modules/posts';
+import { Locations } from '~/modules/locations';
+import { Users, User } from '~/modules/users';
+
 import { GraphQLOptions } from 'graphql-server-core';
-import schema from '../api/schema';
-import { MyRequest, User } from '../types';
+import schema from 'api/schema';
+import { MyRequest, Maybe } from '~/types';
 
 export interface Context {
-  user: User | null,
-  Messages: Messages,
-  Users: Users,
-  Locations: Locations,
-  Posts: Posts,
+  user: Maybe<User>;
+  Messages: Messages;
+  Users: Users;
+  Locations: Locations;
+  Posts: Posts;
+}
+
+export interface UserConnection {
+  user_id: string;
 }
 
 const graphql = graphqlExpress((req: express.Request) => {
@@ -25,7 +33,7 @@ const graphql = graphqlExpress((req: express.Request) => {
     throw new Error('Query too large.');
   }
 
-  let user;
+  let user: Maybe<User> = null;
   if (req.user) {
     user = Object.assign({}, req.user);
   }

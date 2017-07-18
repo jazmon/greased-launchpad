@@ -1,4 +1,4 @@
-exports.up = function (knex, Promise) {
+exports.up = function(knex, Promise) {
   const locationsPromise = knex.schema.createTable('locations', t => {
     t.bigIncrements().primary();
     t.timestamps(true, true);
@@ -17,7 +17,7 @@ exports.up = function (knex, Promise) {
   return Promise.all([locationsPromise, postsPromise]);
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function(knex, Promise) {
   const locationsPromise = knex.schema.dropTable('locations');
   const postsPromise = knex.schema.dropTable('posts');
 

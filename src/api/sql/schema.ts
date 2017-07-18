@@ -1,60 +1,21 @@
-import { property, constant } from 'lodash';
-import { User as dbUser } from '../../db';
-import { Context } from '../../middleware/graphql';
+import { userResolver, userSchemaFragment } from '~/modules/users';
+import { messageResolver, messageSchemaFragment } from '~/modules/messages';
+import { postResolver, postSchemaFragment } from '~/modules/posts';
+import { locationResolver, locationSchemaFragment } from '~/modules/locations';
 
 export const schema = [
   `
-  type Post {
-    # The SQL ID of this entry
-    id: Int!
-    createdAt: String!
-    updatedAt: String!
-    content: String
-    user: User!
-    # comments(limit: Int, offset: Int): [Comment]!
-  }
-  type Message {
-    # The SQL ID of this entry
-    id: Int!
-    createdAt: String!
-    updatedAt: String!
-    content: String
-    user: User!
-  }
-  type User {
-    # The ID of this entry from Auth0
-    user_id: String!
-    createdAt: String!
-    updatedAt: String!
-    name: String
-    email: String
-    picture: String
-    nickname: String
-  }
+  ${locationSchemaFragment}
+  ${messageSchemaFragment}
+  ${postSchemaFragment}
+  ${userSchemaFragment}
 `,
 ];
 
-export interface Foo {
-  user_id: string;
-}
-
-export const resolvers = {
-  Message: {
-    createdAt: property('created_at'),
-    updatedAt: property('updated_at'),
-    user({ user_id }: Foo, _: any, context: Context) {
-      return context.Users.getUserById(user_id);
-    },
-  },
-  Post: {
-    createdAt: property('created_at'),
-    updatedAt: property('updated_at'),
-    user({ user_id }: Foo, _: any, context: Context) {
-      return context.Users.getUserById(user_id);
-    },
-  },
-  User: {
-    createdAt: property('created_at'),
-    updatedAt: property('updated_at'),
-  },
-};
+export const resolvers = Object.assign(
+  {},
+  userResolver,
+  locationResolver,
+  messageResolver,
+  postResolver,
+);

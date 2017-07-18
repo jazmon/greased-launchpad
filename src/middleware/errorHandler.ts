@@ -1,8 +1,13 @@
-import logger from '../logger';
+import logger from '~/logger';
 import { Request, Response } from 'express';
-import { HttpError } from '../types';
+import { HttpError } from '~/types';
 
-const errorHandler = (err: Error | HttpError, req: Request, res: Response, next: Function) => {
+const errorHandler = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: Function,
+) => {
   logger.error(err.message, err.stack);
   let status: number = 500;
   if (err instanceof HttpError) {
@@ -10,7 +15,11 @@ const errorHandler = (err: Error | HttpError, req: Request, res: Response, next:
   }
   res
     .status(status)
-    .json({ error: true, message: err.message || 'Something went wrong' });
+    .json({
+      error: true,
+      success: false,
+      message: err.message || 'Something went wrong',
+    });
 };
 
 export default errorHandler;
