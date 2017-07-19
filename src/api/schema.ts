@@ -37,6 +37,7 @@ const rootResolvers = {
     users(root: any, args: any, context: Context) {
       return context.Users.getAll();
     },
+    // ## GENERATOR RESOLVER IMPORTS
   },
 };
 

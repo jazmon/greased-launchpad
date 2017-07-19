@@ -55,7 +55,7 @@ module.exports = function(plop) {
         pattern: /## GENERATOR SCHEMA FRAGMENTS/gi,
         // prettier-ignore
         template:
-          '## GENERATOR SCHEMA FRAGMENTS\n  \$\{ {{camelCase name}}SchemaFragment\}', // eslint-disable-line no-template-curly-in-string, no-useless-escape
+          '## GENERATOR SCHEMA FRAGMENTS\n  \$\{{{camelCase name}}SchemaFragment\}', // eslint-disable-line no-template-curly-in-string, no-useless-escape
       },
       {
         type: 'modify',
