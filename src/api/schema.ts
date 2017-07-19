@@ -12,6 +12,7 @@ const rootSchema = [
       users: [User]
       # Return the currently logged in user, or null if nobody is logged in
       currentUser: User
+      ## GENERATOR SCHEMA IMPORTS
     }
     schema {
       query: Query

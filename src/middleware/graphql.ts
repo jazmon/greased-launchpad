@@ -6,6 +6,7 @@ import { Messages } from '~/modules/messages';
 import { Posts } from '~/modules/posts';
 import { Locations } from '~/modules/locations';
 import { Users, User } from '~/modules/users';
+// ## GENERATOR MODULE IMPORTS
 
 import { GraphQLOptions } from 'graphql-server-core';
 import schema from 'api/schema';

@@ -1,0 +1,11 @@
+import { createJsonRoute } from 'utils/endpoint';
+import * as express from 'express';
+import { Response } from 'express-serve-static-core';
+import { {{pascalCase namePlural}} } from './model';
+
+const model = new {{pascalCase namePlural}}();
+
+export const get{{pascalCase namePlural}} = createJsonRoute(async () => {
+  const {{camelCase namePlural}} = await model.getAll();
+  return {{camelCase namePlural}};
+});

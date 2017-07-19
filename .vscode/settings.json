@@ -10,5 +10,6 @@
   "prettier.printWidth": 80,
   "prettier.tabWidth": 2,
   "prettier.singleQuote": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "html.format.enable": false
 }

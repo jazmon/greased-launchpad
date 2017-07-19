@@ -1,0 +1,19 @@
+import { property } from 'lodash';
+
+export const schemaFragment = `
+  type {{pascalCase name}} {
+    # The SQL ID of this entry
+    id: Int!
+    # Timestamp when created
+    createdAt: String!
+    # Timestamp of last modify
+    updatedAt: String!
+  }
+`;
+
+export const resolver = {
+  {{pascalCase name}}: {
+    createdAt: property('created_at'),
+    updatedAt: property('updated_at'),
+  },
+};
