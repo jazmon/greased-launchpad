@@ -27,7 +27,7 @@
     "graphql-server-express": "^0.8.5",
     "graphql-tools": "^1.0.0",
     "helmet": "^3.6.1",
-    "joi": "^10.4.1",
+    "joi": "^13.0.0",
     "jwt-decode": "^2.2.0",
     "knex": "^0.13.0",
     "lodash": "^4.17.4",
